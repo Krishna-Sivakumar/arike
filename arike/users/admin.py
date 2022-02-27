@@ -29,6 +29,8 @@ class UserAdmin(auth_admin.UserAdmin):
             },
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+        (None, {"fields": ("role", "phone", "is_verified")}),
+        (_("Relations"), {"fields": ("facility", "district")}),
     )
     list_display = ["username", "name", "is_superuser"]
     search_fields = ["name"]
