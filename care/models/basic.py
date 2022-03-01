@@ -137,6 +137,7 @@ class BaseModel(models.Model):
 
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted = models.BooleanField(default=False)
 
     def __str__(self):
         field_names = [field.name for field in self._meta.get_fields()]
