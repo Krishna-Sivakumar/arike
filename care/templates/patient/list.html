@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<p class="text-4xl font-bold capitalize m-2">Patients</p>
+<div class="w-full bg-white rounded-md m-2 p-2">
+    <p class="text-xl font-bold capitalize">Filters</p>
+    <form action="" method="GET" class="flex gap-2 items-center mt-4">
+      <label for=""></label>
+      <input type="text" placeholder="Name" name="name" class="border-2 border-black rounded-lg px-8 p-2">
+      <input type="tel" placeholder="Phone" name="phone" class="border-2 border-black rounded-lg px-8 p-2">
+      <input type="submit" value="submit" class="bg-[#333] text-white p-2 rounded-lg capitalize">
+    </form>
+</div>
+<div class="flex w-full">
+    {% for patient in object_list %}
+    <div class="bg-white rounded-lg w-1/2 m-2 p-4">
+        <div class="flex justify-between items-center">
+          <p class="font-bold text-xl">{{patient.full_name}}</p>
+          <p class="text-gray-500 bg-gray-300 px-2 rounded-full">{{patient.kind}}</p>
+        </div>
+        <p class="text-gray-700 mt-2">{{patient.address}}</p>
+        <hr class="border-t-1 mt-4 w-full">
+        <div class="flex justify-between mt-2 items-center">
+          <p class="font-bold">{{patient.phone}}</p>
+          <a href="/patient/{{patient.pk}}" class="border-2 border-black rounded-md font-bold capitalize px-2">view</a>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-3xl text-slate-600 font-bold m-2">No patients found :(</p>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

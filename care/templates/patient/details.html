@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-4xl font-bold capitalize">{{object.full_name}}</h1>
+<div class="flex mt-5 justify-between">
+    <h2 class="text-2xl font-bold">
+        Personal Information
+    </h2>
+    <a href="/patient/{{object.pk}}/edit/" class="bg-[#333] capitalize p-2 px-8 rounded-lg text-white">Edit</a>
+</div>
+<div class="w-full p-4 mt-5 rounded-lg grid grid-cols-3 grid-rows-3 gap-5 grow">
+    <div class="bg-white rounded-lg p-4 row-span-2 col-span-2 flex flex-col">
+        <p class="text-xl capitalize font-bold">{{object.full_name}}</p>
+        <p class="text">{{object.address}}</p>
+        <div class="grid grid-rows-3 grid-cols-2 grow mt-3">
+            <div class="flex flex-col">
+                <p class="font-bold capitalize">phone number</p>
+                <p><a class="text-blue-500" href="tel:+{{object.phone}}">{{object.phone}}</a></p>
+            </div>
+            <div class="flex flex-col">
+                <p class="font-bold capitalize">emergency phone number</p>
+                <p><a class="text-blue-500" href="tel:+{{object.emergency_phone_number}}">{{object.emergency_phone_number}}</a></p>
+            </div>
+            <div class="flex flex-col">
+                <p class="font-bold capitalize">gender</p>
+                <p>{{object.gender}}</p>
+            </div>
+            <div class="flex flex-col">
+                <p class="font-bold capitalize">facility</p>
+                <p>{{object.facility}}</p>
+            </div>
+            <div class="flex flex-col">
+                <p class="font-bold capitalize">last visit</p>
+            </div>
+            <div class="flex flex-col">
+                <p class="font-bold capitalize">next visit</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white rounded-lg p-4 flex items-center justify-center">
+        <p class="text-4xl capitalize font-bold">
+            <a href="#">Visits</a>
+        </p>
+    </div>
+    <div class="bg-white rounded-lg p-4 flex items-center justify-center">
+        <p class="text-4xl capitalize font-bold">
+            <a href="#">Treatments</a>
+        </p>
+    </div>
+    <div class="bg-white rounded-lg p-4 flex items-center justify-center">
+        <p class="text-4xl capitalize font-bold">
+            <a href="/family/">Family Details</a>
+        </p>
+    </div>
+    <div class="bg-white rounded-lg p-4 flex items-center justify-center">
+        <p class="text-4xl capitalize font-bold">
+            <a href="#">Disease History</a>
+        </p>
+    </div>
+</div>
+{% endblock content %}

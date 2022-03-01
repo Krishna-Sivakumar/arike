@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arike</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+
+</head>
+<body>
+    <div class="h-screen w-screen bg-neutral-200 flex">
+        <div class="bg-white w-1/6 flex flex-col p-4">
+            <h2 class="font-bold text-2xl">Arike</h2>
+            <ul class="overflow-scroll">
+                <li before="○" class="before:content-[attr(before)] before:relative before:right-6 text-[#333] p-2 pl-8 rounded-xl my-1 hover:bg-[#333] hover:text-white transition duration-75">
+                    <a href="/patient/">Patients</a>
+                </li>
+            </ul>
+            <hr class="border-solid border-gray-200 border-[0.5] mt-auto">
+            <div class="flex justify-start items-center mt-4">
+                <div class="bg-neutral-200 border-0 w-[40px] h-[40px] rounded-[100%] mr-4">
+                </div>
+                <div class="flex flex-col">
+                    <p class="text-lg">{{user}}</p>
+                    <p class="text-blue-500"><a href="/user/logout/">Logout</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="w-5/6 p-4 flex flex-col">
+                {% block content %}
+                {% endblock content %}
+        </div>
+    </div>
+</body>
+</html>
