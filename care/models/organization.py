@@ -28,6 +28,7 @@ class Ward (BaseModel):
 class Facility(BaseModel):
     name = models.CharField(max_length=100, null=False, blank=False)
     kind = models.CharField(max_length=3, choices=FACILITY_KIND_CHOICES, null=False, blank=False)
+    address = models.TextField(null=False, blank=False)
     pincode = models.CharField(max_length=15, null=False, blank=False)
     phone = models.CharField(max_length=10, null=False, blank=False)
 

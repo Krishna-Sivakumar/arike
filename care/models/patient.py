@@ -1,6 +1,7 @@
 from django.db import models
-from .basic import BaseModel, GENDER_CHOICES, FAMILY_RELATION_CHOICES
-from .organization import Ward, Facility
+
+from .basic import FAMILY_RELATION_CHOICES, GENDER_CHOICES, BaseModel
+from .organization import Facility, Ward
 
 
 class Patient(BaseModel):
