@@ -1,4 +1,7 @@
+from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from .basic import FAMILY_RELATION_CHOICES, GENDER_CHOICES, BaseModel
 from .organization import Facility, Ward
@@ -32,3 +35,17 @@ class FamilyDetails(BaseModel):
     is_primary = models.BooleanField(default=False)
 
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+
+@receiver(post_save, sender=Patient)
+def updateReport(instance, **kwargs):
+    send_mail(
+        "subject",
+        "message",
+        "hospital@hospital.com",
+        [
+            member.email
+            for member in
+            FamilyDetails.objects.filter(patient=instance, deleted=False)
+        ]
+    )
