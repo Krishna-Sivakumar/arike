@@ -14,4 +14,5 @@ urlpatterns = [
     path("patient/create", care.views.PatientCreate.as_view()),
     path("patient/<pk>/", care.views.PatientDetails.as_view()),
     path("patient/<pk>/edit/", care.views.PatientUpdate.as_view()),
+    path("patient/<pk>/delete/", care.views.PatientDelete.as_view()),
 ]
