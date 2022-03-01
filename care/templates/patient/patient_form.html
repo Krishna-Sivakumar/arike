@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<p class="text-4xl font-bold capitalize">{{head}}</p>
+    <form method="POST" class="grid grid-cols-2 grid-rows-[8] gap-4 mt-5">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="submit" class="col-span-2 bg-[#333] text-white p-2 rounded-lg capitalize font-bold text-2xl">
+    </form>
+</div>
+{% endblock content %}

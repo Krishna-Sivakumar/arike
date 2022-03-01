@@ -6,8 +6,6 @@ from care.models import Patient
 
 
 class PatientModelView:
-    model = Patient
-
     def get_queryset(self):
         nurse: User = self.request.user
         return Patient.objects.filter(facility=nurse.facility)
@@ -32,10 +30,30 @@ class PatientDetails(PatientModelView, generic.DetailView, LoginRequiredMixin):
 
 
 class PatientCreate(PatientModelView, generic.edit.CreateView, LoginRequiredMixin):
-    template_name = ""
+    template_name = "patient/patient_form.html"
     fields = "__all__"
+    model = Patient
+    success_url = "/patient/"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "head": "create patient"
+        })
+        return context
 
 
 class PatientUpdate(PatientModelView, generic.edit.UpdateView, LoginRequiredMixin):
-    template_name = ""
+    template_name = "patient/patient_form.html"
     fields = "__all__"
+    model = Patient
+
+    def get_success_url(self) -> str:
+        return f"/patient/{self.get_object().pk}/"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "head": "update patient"
+        })
+        return context

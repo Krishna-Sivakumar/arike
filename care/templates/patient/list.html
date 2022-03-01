@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<p class="text-4xl font-bold capitalize m-2">Patients</p>
+<div class="flex justify-between m-2 items-center">
+  <p class="text-4xl font-bold capitalize">Patients</p>
+  <a href="/patient/create" class="bg-[#333] text-white p-2 px-8 rounded-lg capitalize">new</a>
+</div>
 <div class="w-full bg-white rounded-md m-2 p-2">
     <p class="text-xl font-bold capitalize">Filters</p>
     <form action="" method="GET" class="flex gap-2 items-center mt-4">
