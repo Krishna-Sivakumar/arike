@@ -1,20 +1,38 @@
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
 from django.views import generic
 
+from care.forms import CustomForm
 from care.models import Facility
 
 # Create your views here.
 
 
-class Home(generic.TemplateView, LoginRequiredMixin):
+class Home(LoginRequiredMixin, generic.TemplateView):
     template_name = "home.html"
 
 
-class ListFacilities(generic.ListView, LoginRequiredMixin):
+class ListFacilities(LoginRequiredMixin, generic.ListView):
     template_name = "facility/list.html"
     queryset = Facility.objects.all()
 
 
 class UserLogin(LoginView):
     pass
+
+
+class Profile(LoginRequiredMixin, generic.edit.FormView):
+    template_name = "profile.html"
+    success_url = "/profile"
+    form_class = CustomForm
+
+    def get_form(self):
+        return PasswordChangeForm(self.request.user, self.request.POST)
+
+    def form_valid(self, form):
+        user = form.save()
+        update_session_auth_hash(self.request, user)
+        return HttpResponseRedirect(self.get_success_url())

@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 
 from arike.users.models import User
+from care.forms import CustomForm
 from care.models import Patient
 
 
@@ -12,7 +13,7 @@ class PatientModelView:
         return Patient.objects.filter(facility=nurse.facility, deleted=False)
 
 
-class PatientList(generic.ListView, LoginRequiredMixin):
+class PatientList(LoginRequiredMixin, generic.ListView):
 
     template_name = "patient/list.html"
 
@@ -26,14 +27,13 @@ class PatientList(generic.ListView, LoginRequiredMixin):
         return Patient.objects.filter(facility=nurse.facility, **query_params, deleted=False)
 
 
-class PatientDetails(PatientModelView, generic.DetailView, LoginRequiredMixin):
+class PatientDetails(LoginRequiredMixin, PatientModelView, generic.DetailView):
     template_name = "patient/details.html"
 
 
-class PatientCreate(PatientModelView, generic.edit.CreateView, LoginRequiredMixin):
+class PatientCreate(LoginRequiredMixin, PatientModelView, generic.edit.CreateView):
     template_name = "patient/patient_form.html"
-    fields = "__all__"
-    model = Patient
+    form_class = CustomForm
     success_url = "/patient/"
 
     def get_context_data(self, **kwargs):
@@ -44,10 +44,9 @@ class PatientCreate(PatientModelView, generic.edit.CreateView, LoginRequiredMixi
         return context
 
 
-class PatientUpdate(PatientModelView, generic.edit.UpdateView, LoginRequiredMixin):
+class PatientUpdate(LoginRequiredMixin, PatientModelView, generic.edit.UpdateView):
     template_name = "patient/patient_form.html"
-    fields = "__all__"
-    model = Patient
+    form_class = CustomForm
 
     def get_success_url(self) -> str:
         return f"/patient/{self.get_object().pk}/"
@@ -60,10 +59,10 @@ class PatientUpdate(PatientModelView, generic.edit.UpdateView, LoginRequiredMixi
         return context
 
 
-class PatientDelete(PatientModelView, generic.edit.DeleteView, LoginRequiredMixin):
+class PatientDelete(LoginRequiredMixin, PatientModelView, generic.edit.DeleteView):
 
     template_name = "patient/patient_form.html"
-    model = Patient
+    form_class = CustomForm
 
     success_url = "/patient/"
 

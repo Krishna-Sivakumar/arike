@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="h-screen w-full flex flex-col items-center">
+    <div class="w-2/3">
+        <div class="flex flex-col items-center gap-2">
+            <p class="text-2xl font-bold capitalize">{{user}}</p>
+            <p class="font-bold text-white bg-[#333] px-4 rounded-full capitalize">{{user.role}}</p>
+        </div>
+        <hr class="border-gray-400 border-t-1 my-4">
+        <p class="text-3xl font-bold">Profile</p>
+        <div class="grid grid-cols-2 grid-rows-2 gap-4 mt-5">
+            <div class="bg-white rounded-lg flex flex-col p-4">
+                <p class="text-gray-500">Full Name</p>
+                <p>{{user}}</p>
+            </div>
+            <div class="bg-white rounded-lg flex flex-col p-4">
+                <p class="text-gray-500">Email</p>
+                <p>{{user.email}}</p>
+            </div>
+            <div class="bg-white rounded-lg flex flex-col p-4">
+                <p class="text-gray-500">Birth Date</p>
+                <p>{{user.date_of_birth}}</p>
+            </div>
+        </div>
+        <p class="text-3xl font-bold mt-5">Password</p>
+        <form class="grid grid-cols-2 grid-rows-3 gap-4 mt-5" method="POST">
+            {% csrf_token %}
+            <span class="row-start-1 col-start-2"></span>
+            {% for field in form %}
+                <p class="bg-white rounded-lg flex flex-col p-4">
+                    <span class="text-gray-500">
+                    {{ field.label_tag }}
+                    </span>
+                    {{field}}
+                </p>
+            {% endfor %}
+            <input type="submit" value="Submit" class="bg-[#333] text-white font-bold capitalize rounded-lg p-2 row-start-3">
+        </form>
+    </div>
+</div>
+{% endblock content %}

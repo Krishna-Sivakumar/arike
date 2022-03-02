@@ -1,8 +1,25 @@
-{% extends "base.html" %}
-{% block content %}
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-{% endblock content %}
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arike | Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <div class="h-screen w-screen flex">
+        <div class="bg-[#333] w-1/2 h-screen flex justify-center items-center">
+            <p class="text-7xl text-white capitalize font-bold">arike</p>
+        </div>
+        <div class="w-1/2 h-screen flex flex-col justify-center items-center">
+            <p class="text-4xl text-[#333] capitalize">authorized login</p>
+            <form method="post" class="mt-5 grid grid-rows-3 grid-cols-1">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit" class="bg-[#333] text-white font-bold cols-span-1 p-2 rounded-lg">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
