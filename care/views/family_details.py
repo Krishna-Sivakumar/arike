@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import (
 )
 from django.http import HttpResponseRedirect
 from django.views import generic
+from .mixins import TitleMixin
 
 from care.forms import FamilyForm
 from care.models import FamilyDetails, Patient
@@ -50,15 +51,9 @@ class ListFamily(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class CreateFamily(UserAccessMixin, FamilyEditMixin, generic.edit.CreateView):
+class CreateFamily(UserAccessMixin, FamilyEditMixin, TitleMixin, generic.edit.CreateView):
     template_name = "family/form.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "head": "create family detail"
-        })
-        return context
+    title = "create family detail"
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -67,7 +62,7 @@ class CreateFamily(UserAccessMixin, FamilyEditMixin, generic.edit.CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class UpdateFamily(UserAccessMixin, FamilyEditMixin, generic.edit.UpdateView):
+class UpdateFamily(UserAccessMixin, FamilyEditMixin, TitleMixin, generic.edit.UpdateView):
     template_name = "family/form.html"
 
     def get_queryset(self):
@@ -76,12 +71,8 @@ class UpdateFamily(UserAccessMixin, FamilyEditMixin, generic.edit.UpdateView):
             patient__facility=self.request.user.facility
         )
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "head": "edit family detail"
-        })
-        return context
+    def get_title(self):
+        return f"edit {self.get_object().full_name}"
 
 
 class DeleteFamily(UserAccessMixin, FamilyEditMixin, generic.edit.DeleteView):

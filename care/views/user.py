@@ -13,6 +13,8 @@ from arike.users.models import User
 from care.forms import UserForm
 from care.models import TemporaryLink
 
+from .mixins import TitleMixin
+
 
 class UserAccessMixin(LoginRequiredMixin, UserPassesTestMixin, AccessMixin):
     def handle_no_permission(self):
@@ -34,17 +36,11 @@ class ListUsers(UserAccessMixin, generic.ListView):
         )
 
 
-class CreateUser(UserAccessMixin, generic.edit.CreateView):
+class CreateUser(UserAccessMixin, TitleMixin, generic.edit.CreateView):
     form_class = UserForm
     template_name = "user/form.html"
     success_url = "/user/"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "head": "Register Nurse"
-        })
-        return context
+    title = "Register Nurse"
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -76,7 +72,7 @@ class UserDetail(UserAccessMixin, generic.DetailView):
         )
 
 
-class UpdateUser(UserAccessMixin, generic.edit.UpdateView):
+class UpdateUser(UserAccessMixin, TitleMixin, generic.edit.UpdateView):
     template_name = "user/form.html"
     form_class = UserForm
     success_url = "/user/"
@@ -86,17 +82,14 @@ class UpdateUser(UserAccessMixin, generic.edit.UpdateView):
             Q(district=self.request.user.district) & ~Q(role="DA")
         )
 
+    def get_title(self):
+        return f"Update {self.get_object().first_name} {self.get_object().last_name}"
 
-class AssignFacility(UserAccessMixin, generic.edit.UpdateView):
+
+class AssignFacility(UserAccessMixin, TitleMixin, generic.edit.UpdateView):
     template_name = "user/form.html"
     fields = ("facility",)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "head": "Assign Facility"
-        })
-        return context
+    title = "Assign Facility"
 
     def get_queryset(self):
         return User.objects.filter(
@@ -104,10 +97,13 @@ class AssignFacility(UserAccessMixin, generic.edit.UpdateView):
         )
 
 
-class DeleteUser(UserAccessMixin, generic.edit.DeleteView):
+class DeleteUser(UserAccessMixin, TitleMixin, generic.edit.DeleteView):
 
     template_name = "user/form.html"
     success_url = "/user/"
+
+    def get_title(self):
+        return f"Delete {self.get_object().first_name} {self.get_object().last_name}"
 
     def get_queryset(self):
         return User.objects.filter(

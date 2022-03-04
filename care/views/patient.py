@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import (
 )
 from django.http import HttpResponseRedirect
 from django.views import generic
+from .mixins import TitleMixin
 
 from arike.users.models import User
 from care.forms import CustomForm
@@ -43,38 +44,27 @@ class PatientDetails(UserAccessMixin, PatientModelView, generic.DetailView):
     template_name = "patient/details.html"
 
 
-class PatientCreate(UserAccessMixin, PatientModelView, generic.edit.CreateView):
+class PatientCreate(UserAccessMixin, PatientModelView, TitleMixin, generic.edit.CreateView):
     template_name = "patient/patient_form.html"
     form_class = CustomForm
     success_url = "/patient/"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "head": "create patient"
-        })
-        return context
+    title = "create patient"
 
 
-class PatientUpdate(UserAccessMixin, PatientModelView, generic.edit.UpdateView):
+class PatientUpdate(UserAccessMixin, PatientModelView, TitleMixin, generic.edit.UpdateView):
     template_name = "patient/patient_form.html"
     form_class = CustomForm
+    title = "update patient"
 
     def get_success_url(self) -> str:
         return f"/patient/{self.get_object().pk}/"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "head": "update patient"
-        })
-        return context
 
-
-class PatientDelete(UserAccessMixin, PatientModelView, generic.edit.DeleteView):
+class PatientDelete(UserAccessMixin, PatientModelView, TitleMixin, generic.edit.DeleteView):
 
     template_name = "patient/patient_form.html"
     form_class = CustomForm
+    title = "delete patient"
 
     success_url = "/patient/"
 
@@ -84,10 +74,3 @@ class PatientDelete(UserAccessMixin, PatientModelView, generic.edit.DeleteView):
         self.object.deleted = True
         self.object.save()
         return HttpResponseRedirect(success_url)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "head": "delete patient"
-        })
-        return context
