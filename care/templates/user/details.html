@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="w-full h-screen flex flex-col items-center">
+    <div class="w-1/2">
+        <div class="flex gap-4 items-center">
+            <p class="text-3xl font-bold capitalize mr-auto">{{object.first_name}} {{object.last_name}}</p>
+            <a href="/user/{{object.pk}}/edit" class="border-2 border-black font-bold capitalize p-2 px-4 rounded-lg hover:bg-[#333] hover:text-white transition duration-100">edit</a>
+            <a href="/user/{{object.pk}}/delete" class="border-2 border-black font-bold capitalize p-2 px-4 rounded-lg hover:bg-[#333] hover:text-white transition duration-100">delete</a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <p class="text-xl font-bold mt-5 col-span-2">Profile</p>
+            <div class="bg-white rounded-lg flex flex-col p-2">
+                <p class="text-gray-500">First Name</p>
+                <p>{{object.first_name}}</p>
+            </div>
+            <div class="bg-white rounded-lg flex flex-col p-2">
+                <p class="text-gray-500">Last Name</p>
+                <p>{{object.last_name}}</p>
+            </div>
+            <div class="bg-white rounded-lg flex flex-col p-2">
+                <p class="text-gray-500">Email</p>
+                <p>{{object.email}}</p>
+            </div>
+            <div class="bg-white rounded-lg flex flex-col p-2">
+                <p class="text-gray-500">Birth Date</p>
+                <p>{{object.date_of_birth}}</p>
+            </div>
+            <p class="text-xl font-bold mt-5 col-span-2">Facilities</p>
+            <div class="bg-white rounded-lg flex flex-col p-2">
+                <p class="text-gray-500">Facility</p>
+                <p>{{object.facility}}</p>
+            </div>
+            <p class="text-xl font-bold mt-5 col-span-2">Role</p>
+            <div class="bg-white rounded-lg flex flex-col p-2">
+                <p class="text-gray-500">Role</p>
+                <p>{{object.role}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

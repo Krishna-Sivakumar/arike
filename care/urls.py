@@ -2,14 +2,16 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 import care.views
-from care.views.base import Profile
+from care.views.base import InitialPassword, Profile, TemporaryLogin
 
 urlpatterns = [
     path("", care.views.Home.as_view(), name="home"),
     path("user/login/", care.views.UserLogin.as_view()),
     path("user/logout/", LogoutView.as_view()),
-    path("profile", Profile.as_view()),
-    path("facility", care.views.ListFacilities.as_view())
+    path("profile/", Profile.as_view()),
+    path("initial/", InitialPassword.as_view()),
+    path("temp", TemporaryLogin.as_view()),
+    path("facility/", care.views.ListFacilities.as_view())
 ] + [
     # Patient Views
     path("patient/", care.views.PatientList.as_view()),
@@ -23,4 +25,12 @@ urlpatterns = [
     path("patient/<pk>/family/create/", care.views.CreateFamily.as_view()),
     path("family/<pk>/edit", care.views.UpdateFamily.as_view()),
     path("family/<pk>/delete/", care.views.DeleteFamily.as_view()),
+] + [
+    # User Views
+    path("user/", care.views.ListUsers.as_view()),
+    path("user/create/", care.views.CreateUser.as_view()),
+    path("user/<pk>/", care.views.UserDetail.as_view()),
+    path("user/<pk>/edit/", care.views.UpdateUser.as_view()),
+    path("user/<pk>/delete/", care.views.DeleteUser.as_view()),
+    path("user/<pk>/assign/", care.views.AssignFacility.as_view()),
 ]

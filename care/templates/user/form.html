@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="w-full h-screen flex justify-center">
+    <div class="w-1/2">
+        <p class="text-4xl font-bold capitalize">{{head}}</p>
+        <form method="POST" class="grid grid-cols-2 grid-rows-[8] gap-4 mt-5">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="bg-white rounded-lg flex flex-col p-2">
+                {{ field.errors }}
+                <span class="text-gray-500">
+                {{ field.label_tag }}
+                </span>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" value="submit" class="col-span-2 bg-[#333] text-white p-2 rounded-lg capitalize font-bold text-2xl">
+        </form>
+    </div>
+</div>
+{% endblock content %}

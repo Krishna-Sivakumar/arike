@@ -1,4 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (
+    AccessMixin,
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+)
 from django.http import HttpResponseRedirect
 from django.views import generic
 
@@ -7,13 +11,21 @@ from care.forms import CustomForm
 from care.models import Patient
 
 
+class UserAccessMixin(LoginRequiredMixin, UserPassesTestMixin, AccessMixin):
+    def handle_no_permission(self):
+        return HttpResponseRedirect("/initial")
+
+    def test_func(self):
+        return self.request.user.is_verified is True
+
+
 class PatientModelView:
     def get_queryset(self):
         nurse: User = self.request.user
-        return Patient.objects.filter(facility=nurse.facility, deleted=False)
+        return Patient.objects.filter(facility=nurse.facility, facility__kind="PHC", deleted=False)
 
 
-class PatientList(LoginRequiredMixin, generic.ListView):
+class PatientList(UserAccessMixin, generic.ListView):
 
     template_name = "patient/list.html"
 
@@ -24,14 +36,14 @@ class PatientList(LoginRequiredMixin, generic.ListView):
             "phone__icontains": self.request.GET.get("phone") or "",
         }
 
-        return Patient.objects.filter(facility=nurse.facility, **query_params, deleted=False)
+        return Patient.objects.filter(facility=nurse.facility, facility__kind="PHC", **query_params, deleted=False)
 
 
-class PatientDetails(LoginRequiredMixin, PatientModelView, generic.DetailView):
+class PatientDetails(UserAccessMixin, PatientModelView, generic.DetailView):
     template_name = "patient/details.html"
 
 
-class PatientCreate(LoginRequiredMixin, PatientModelView, generic.edit.CreateView):
+class PatientCreate(UserAccessMixin, PatientModelView, generic.edit.CreateView):
     template_name = "patient/patient_form.html"
     form_class = CustomForm
     success_url = "/patient/"
@@ -44,7 +56,7 @@ class PatientCreate(LoginRequiredMixin, PatientModelView, generic.edit.CreateVie
         return context
 
 
-class PatientUpdate(LoginRequiredMixin, PatientModelView, generic.edit.UpdateView):
+class PatientUpdate(UserAccessMixin, PatientModelView, generic.edit.UpdateView):
     template_name = "patient/patient_form.html"
     form_class = CustomForm
 
@@ -59,7 +71,7 @@ class PatientUpdate(LoginRequiredMixin, PatientModelView, generic.edit.UpdateVie
         return context
 
 
-class PatientDelete(LoginRequiredMixin, PatientModelView, generic.edit.DeleteView):
+class PatientDelete(UserAccessMixin, PatientModelView, generic.edit.DeleteView):
 
     template_name = "patient/patient_form.html"
     form_class = CustomForm

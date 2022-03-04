@@ -1,9 +1,21 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (
+    AccessMixin,
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+)
 from django.http import HttpResponseRedirect
 from django.views import generic
 
 from care.forms import FamilyForm
 from care.models import FamilyDetails, Patient
+
+
+class UserAccessMixin(LoginRequiredMixin, UserPassesTestMixin, AccessMixin):
+    def handle_no_permission(self):
+        return HttpResponseRedirect("/intial")
+
+    def test_func(self):
+        return self.request.user.is_verified is True
 
 
 class FamilyEditMixin:
@@ -38,7 +50,7 @@ class ListFamily(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class CreateFamily(LoginRequiredMixin, FamilyEditMixin, generic.edit.CreateView):
+class CreateFamily(UserAccessMixin, FamilyEditMixin, generic.edit.CreateView):
     template_name = "family/form.html"
 
     def get_context_data(self, **kwargs):
@@ -55,7 +67,7 @@ class CreateFamily(LoginRequiredMixin, FamilyEditMixin, generic.edit.CreateView)
         return HttpResponseRedirect(self.get_success_url())
 
 
-class UpdateFamily(LoginRequiredMixin, FamilyEditMixin, generic.edit.UpdateView):
+class UpdateFamily(UserAccessMixin, FamilyEditMixin, generic.edit.UpdateView):
     template_name = "family/form.html"
 
     def get_queryset(self):
@@ -72,7 +84,7 @@ class UpdateFamily(LoginRequiredMixin, FamilyEditMixin, generic.edit.UpdateView)
         return context
 
 
-class DeleteFamily(LoginRequiredMixin, FamilyEditMixin, generic.edit.DeleteView):
+class DeleteFamily(UserAccessMixin, FamilyEditMixin, generic.edit.DeleteView):
 
     template_name = "family/form.html"
 

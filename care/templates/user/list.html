@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex justify-between m-2 items-center">
+  <p class="text-4xl font-bold capitalize">Users</p>
+  <a href="/user/create" class="bg-[#333] text-white p-2 px-8 rounded-lg capitalize">New</a>
+</div>
+<div class="w-full bg-white rounded-md my-2 p-2">
+  <p class="text-xl font-bold capitalize">Filters</p>
+  <form action="" method="GET" class="flex gap-2 items-center mt-4">
+    <label for=""></label>
+    <input type="text" placeholder="Name" name="name" class="border-2 border-black rounded-lg px-8 p-2">
+    <input type="submit" value="submit" class="bg-[#333] text-white p-2 rounded-lg capitalize">
+  </form>
+</div>
+<div class="grid grid-cols-2 gap-4">
+    {% for object in object_list %}
+    <div class="bg-white rounded-lg p-4">
+      <div class="flex flex-col">
+        <p class="text-3xl font-bold flex items-center">
+          <a href="/user/{{object.pk}}">{{object.first_name}} {{object.last_name}}</a>
+          <a href="/user/{{object.pk}}/assign" class="ml-auto border-2 border-black rounded-lg p-1 capitalize text-xs">Assign Facility</a>
+        </p>
+        <p class="text-gray-500">{{object.email}}</p>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-3xl text-slate-600 font-bold m-2">No users found :(</p>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
