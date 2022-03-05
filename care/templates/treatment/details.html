@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex flex-col p-8 gap-6">
+    <p class="text-3xl font-bold">Treatment</p>
+    <div class="bg-white rounded-lg w-full p-4">
+        <div class="grid grid-cols-2 grid-rows-5 gap-1">
+            <p class="text-xl font-bold col-span-2"><a href="/treatment/{{object.pk}}">{{object.patient}}</a></p>
+            <p class="text-md font-bold text-gray-500 col-span-2">{{object.created_at}}</p>
+            <p class="font-bold">Given by</p>
+            <p class="font-bold">Last updated</p>
+            <p>{{object.nurse}}</p>
+            <p>{{object.updated_at}}</p>
+            <p class="font-bold col-span-2">Description</p>
+            <p class="col-span-2 row-span-2">{{object.description}}</p>
+        </div>
+    </div>
+    <p class="text-3xl font-bold">Notes</p>
+    {% for object in notes %}
+    <div class="bg-white rounded-lg w-full p-4">
+        <div class="flex flex-col gap-2">
+            <p class="font-bold">Given by: {{object.user}}</p>
+            <p>{{object.created_at}}</p>
+            <p>{{object.note}}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-3xl font-bold text-slate-600">No notes to display :(</p>
+    {% endfor %}
+</div>
+{% endblock content %}

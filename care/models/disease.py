@@ -1,6 +1,10 @@
 from django.db import models
+
+from arike.users.models import User
+
 from .basic import BaseModel
 from .patient import Patient
+from .treatment import Treatment
 
 
 class Disease(BaseModel):
@@ -12,6 +16,8 @@ class Disease(BaseModel):
 
 
 class PatientDisease(BaseModel):
-    note = models.TextField()
+    note = models.TextField(blank=True, null=True)
+    nurse = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    treatment = models.ForeignKey(Treatment, on_delete=models.DO_NOTHING, blank=True, null=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     disease = models.ForeignKey(Disease, on_delete=models.PROTECT)

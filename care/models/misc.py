@@ -1,8 +1,10 @@
-from django.db import models
-from arike.users.models import User
-import time
 import random
 import string
+import time
+
+from django.db import models
+
+from arike.users.models import User
 
 
 def generate_token():
@@ -12,5 +14,5 @@ def generate_token():
 
 
 class TemporaryLink(models.Model):
-    token = models.CharField(default=generate_token(), null=False, blank=False, max_length=30)
+    token = models.CharField(default=generate_token, null=False, blank=False, max_length=30)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

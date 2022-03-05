@@ -2,6 +2,7 @@ from django import forms
 
 from arike.users.models import User
 from care.models import FamilyDetails, Patient
+from care.models.treatment import Treatment
 
 
 class BaseFormMixin():
@@ -44,3 +45,12 @@ class UserForm(BaseFormMixin, forms.ModelForm):
         fields = ("first_name", "last_name", "username", "email", "date_of_birth", "facility", "role")
 
     role = forms.ChoiceField(choices=User.roles[:2])
+
+
+class TreatmentForm(BaseFormMixin, forms.ModelForm):
+    class Meta:
+        model = Treatment
+        fields = ("description", "care_type")
+        exclude = ("deleted", "patient")
+
+    description = forms.CharField(widget=forms.Textarea({"rows": 3}))

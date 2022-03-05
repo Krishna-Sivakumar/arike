@@ -5,6 +5,7 @@ from .patient import Patient
 
 
 class VisitSchedule(BaseModel):
+    timestamp = models.DateTimeField(null=False, blank=False)
     duration = models.TimeField(null=False, blank=False)
 
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

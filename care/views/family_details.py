@@ -5,10 +5,11 @@ from django.contrib.auth.mixins import (
 )
 from django.http import HttpResponseRedirect
 from django.views import generic
-from .mixins import TitleMixin
 
 from care.forms import FamilyForm
 from care.models import FamilyDetails, Patient
+
+from .mixins import TitleMixin
 
 
 class UserAccessMixin(LoginRequiredMixin, UserPassesTestMixin, AccessMixin):

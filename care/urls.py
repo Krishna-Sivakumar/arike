@@ -19,9 +19,9 @@ urlpatterns = [
     path("patient/<pk>/", care.views.PatientDetails.as_view()),
     path("patient/<pk>/edit/", care.views.PatientUpdate.as_view()),
     path("patient/<pk>/delete/", care.views.PatientDelete.as_view()),
-    path("patient/<pk>/family/", care.views.ListFamily.as_view())
 ] + [
     # Family Detail Views
+    path("patient/<pk>/family/", care.views.ListFamily.as_view()),
     path("patient/<pk>/family/create/", care.views.CreateFamily.as_view()),
     path("family/<pk>/edit", care.views.UpdateFamily.as_view()),
     path("family/<pk>/delete/", care.views.DeleteFamily.as_view()),
@@ -33,4 +33,11 @@ urlpatterns = [
     path("user/<pk>/edit/", care.views.UpdateUser.as_view()),
     path("user/<pk>/delete/", care.views.DeleteUser.as_view()),
     path("user/<pk>/assign/", care.views.AssignFacility.as_view()),
+] + [
+    # Treatment Views
+    path("patient/<pk>/treatment/", care.views.ListTreatments.as_view()),
+    path("patient/<pk>/treatment/create", care.views.CreateTreatment.as_view()),
+    path("treatment/<pk>/edit/", care.views.UpdateTreatment.as_view()),
+    path("treatment/<pk>/delete/", care.views.DeleteTreatment.as_view()),
+    path("treatment/<pk>/", care.views.DetailTreatment.as_view()),
 ]
