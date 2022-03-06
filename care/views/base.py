@@ -6,18 +6,13 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 
 from care.forms import CustomForm
-from care.models import Facility, TemporaryLink
+from care.models import TemporaryLink
 
 # Create your views here.
 
 
 class Home(LoginRequiredMixin, generic.TemplateView):
     template_name = "home.html"
-
-
-class ListFacilities(LoginRequiredMixin, generic.ListView):
-    template_name = "facility/list.html"
-    queryset = Facility.objects.all()
 
 
 class UserLogin(LoginView):

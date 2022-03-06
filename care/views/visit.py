@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 
 from care.forms import ScheduleVisitForm, VisitDetailForm
-from care.models import VisitSchedule, Treatment, TreatmentNotes
+from care.models import Treatment, VisitSchedule
 
 from .mixins import TitleMixin, UserAccessMixin
 

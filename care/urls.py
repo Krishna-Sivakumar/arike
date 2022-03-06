@@ -11,7 +11,6 @@ urlpatterns = [
     path("profile/", Profile.as_view()),
     path("initial/", InitialPassword.as_view()),
     path("temp", TemporaryLogin.as_view()),
-    path("facility/", care.views.ListFacilities.as_view())
 ] + [
     # Patient Views
     path("patient/", care.views.PatientList.as_view()),
@@ -54,4 +53,10 @@ urlpatterns = [
     path("patient/<pk>/disease/create", care.views.CreateDiseaseHistory.as_view()),
     path("disease/<pk>/edit", care.views.UpdateDiseaseHistory.as_view()),
     path("disease/<pk>/delete", care.views.DeleteDiseaseHistory.as_view()),
+] + [
+    # Facility Views
+    path("facility/", care.views.ListFacilities.as_view()),
+    path("facility/<pk>/", care.views.ViewFacility.as_view()),
+    path("facility/<pk>/edit", care.views.UpdateFacility.as_view()),
+    path("facility/<pk>/delete", care.views.DeleteFacility.as_view()),
 ]
