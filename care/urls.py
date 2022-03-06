@@ -40,10 +40,14 @@ urlpatterns = [
     path("treatment/<pk>/edit/", care.views.UpdateTreatment.as_view()),
     path("treatment/<pk>/delete/", care.views.DeleteTreatment.as_view()),
     path("treatment/<pk>/", care.views.DetailTreatment.as_view()),
+    path("treatment/<pk>/add-note", care.views.CreateTreatmentNote.as_view()),
 ] + [
     # Visitation Views
     path("visit/", care.views.ListVisits.as_view()),
     path("visit/schedule", care.views.ScheduleVisit.as_view()),
+    path("visit/<pk>/delete/", care.views.UnscheduleVisit.as_view()),
+    path("visit/<pk>/notes/", care.views.ListVisitNotes.as_view()),
+    path("visit/<pk>/edit/", care.views.VisitDetail.as_view())
 ] + [
     # Disease Views
     path("patient/<pk>/disease/", care.views.ListDiseaseHistory.as_view()),

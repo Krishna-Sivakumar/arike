@@ -67,3 +67,33 @@ class DeleteTreatment(UserAccessMixin, TitleMixin, PatientAuthorizationMixin, ge
 
     def get_success_url(self):
         return f"/patient/{self.kwargs.get('pk')}/treatment/"
+
+
+class CreateTreatmentNote(UserAccessMixin, TitleMixin, PatientAuthorizationMixin, generic.edit.CreateView):
+    title = "add notes"
+    template_name = "user/form.html"
+    success_url = "/visit/"
+    model = TreatmentNotes
+    fields = ("note", "visit")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        treatment = Treatment.objects.get(pk=self.kwargs.get("pk"))
+        context.update({
+            "treatment": treatment
+        })
+        return context
+
+    def form_valid(self, form):
+        treatment = Treatment.objects.get(pk=self.kwargs.get("pk"))
+
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+
+        self.object.treatment = treatment
+        self.object.description = treatment.description
+        self.object.care_type = treatment.care_type
+
+        self.object.save()
+
+        return HttpResponseRedirect(self.get_success_url())

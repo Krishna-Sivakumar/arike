@@ -24,8 +24,13 @@
                     <a href="/patient/">Patients</a>
                 </li>
                 <li before="○" class="before:content-[attr(before)] before:relative before:right-6 text-[#333] p-2 pl-8 rounded-xl my-1 hover:bg-[#333] hover:text-white transition duration-75">
+                    <a href="/visit/">Visits</a>
+                </li>
+                {% if request.user.role == "DA" %}
+                <li before="○" class="before:content-[attr(before)] before:relative before:right-6 text-[#333] p-2 pl-8 rounded-xl my-1 hover:bg-[#333] hover:text-white transition duration-75">
                     <a href="/user/">Users</a>
                 </li>
+                {% endif %}
             </ul>
             <hr class="border-solid border-gray-200 border-[0.5] mt-auto">
             <div class="flex justify-start items-center mt-4">
@@ -37,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-5/6 p-4 flex flex-col">
+        <div class="w-5/6 p-4 flex flex-col overflow-y-scroll">
                 {% block content %}
                 {% endblock content %}
         </div>

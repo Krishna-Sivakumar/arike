@@ -130,6 +130,22 @@ SYMPTOM_CHOICES = [
 ]
 
 
+PALLIATIVE_PHASE = [
+    ("stable", "stable"),
+    ("unstable", "unstable"),
+    ("deteriorating", "deteriorating"),
+    ("dying", "dying"),
+]
+
+SYSTEMIC_EXAMINATION_CHOICES = [
+    ("cardiovascular", "cardiovascular"),
+    ("gastrointestinal", "gastrointestinal"),
+    ("central nervous system", "central nervous system"),
+    ("respiratory", "respiratory"),
+    ("genital-urinary", "genital-urinary"),
+]
+
+
 # Abstract Classes
 
 

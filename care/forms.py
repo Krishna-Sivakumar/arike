@@ -1,9 +1,7 @@
 from django import forms
 
 from arike.users.models import User
-from care.models import FamilyDetails, Patient
-from care.models.disease import PatientDisease
-from care.models.treatment import Treatment
+from care.models import FamilyDetails, Patient, PatientDisease, Treatment, VisitSchedule, VisitDetails
 
 
 class BaseFormMixin():
@@ -61,3 +59,21 @@ class PatientDiseaseForm(BaseFormMixin, forms.ModelForm):
     class Meta:
         model = PatientDisease
         fields = ("disease", "treatment", "note")
+
+
+class ScheduleVisitForm(BaseFormMixin, forms.ModelForm):
+    class Meta:
+        model = VisitSchedule
+        fields = ("timestamp", "duration", "patient")
+
+    timestamp = forms.DateTimeField(widget=forms.DateTimeInput({"type": "datetime-local"}))
+
+
+class VisitDetailForm(BaseFormMixin, forms.ModelForm):
+    class Meta:
+        model = VisitDetails
+        fields = "__all__"
+        exclude = ("deleted", )
+
+    pain = forms.BooleanField(widget=forms.NullBooleanSelect(), label="Is the patient in pain?")
+    patient_at_peace = forms.BooleanField(widget=forms.NullBooleanSelect(), label="Is the patient at peace?")
