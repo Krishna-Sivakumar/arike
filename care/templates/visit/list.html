@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex justify-between m-2 items-center">
+  <p class="text-4xl font-bold capitalize">Schedule</p>
+  <a href="/visit/schedule" class="bg-[#333] text-white p-2 px-8 rounded-lg capitalize">New</a>
+</div>
+<div class="grid grid-cols-3 gap-2 m-2">
+    {% for object in object_list %}
+    <div class="bg-white rounded-lg flex flex-col p-4">
+        <div class="flex items-center">
+            <p class="font-bold">{{object.patient}}</p>
+            <p class="ml-auto font-bold text-gray-500">{{object.patient.ward}}</p>
+        </div>
+        <p>{{object.patient.address}}</p>
+        <p class="font-bold text-blue-500"><a href="tel:+{{object.patient.phone}}">{{object.patient.phone}}</a></p>
+        <div class="flex mt-4 items-center gap-2 justify-end">
+            <a href="/visit/{{object.pk}}/delete" class="border-2 border-black rounded-md font-bold capitalize px-2 hover:text-white hover:bg-[#333]">unschedule</a>
+            <a href="/visit/{{object.pk}}/edit" class="border-2 border-black rounded-md font-bold capitalize px-2 hover:text-white hover:bg-[#333]">visit</a>
+          </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

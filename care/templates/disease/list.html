@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex justify-between m-2 items-center">
+    <p class="text-4xl font-bold capitalize">disease history</p>
+    <a href="create" class="bg-[#333] text-white p-2 px-8 rounded-lg capitalize">Add</a>
+  </div>
+<div class="w-full my-4 m-2">
+    <p class="text-2xl font-bold capitalize"><a href="/patient/{{patient.pk}}">{{patient.full_name}}</a></p>
+    <p class="text">{{patient.address}}</p>
+</div>
+<div class="flex w-full gap-4 m-2">
+    {% for object in object_list %}
+    <div class="bg-white rounded-lg w-1/2 p-4">
+        <div class="gap-4 col-span-2 grid grid-cols-2">
+            <p class="font-bold capitalize text-xl col-span-2">{{object.disease}}</p>
+            <p class="font-bold text-gray-500 col-span-2">{{object.created_at}}</p>
+            <div class="flex flex-col gap-2">
+                <p class="font-bold capitalize">investigation by</p>
+                <p>{{object.nurse}}</p>
+            </div>
+            <div class="flex flex-col gap-2">
+                <p class="font-bold capitalize">treatment</p>
+                <p>{{object.treatment}}</p>
+            </div>
+            <div class="flex flex-col col-span-2">
+                <p class="font-bold capitalize">remarks</p>
+                <p class="col-span-2">{{object.note}}</p>
+            </div>
+            <div class="flex mt-4 items-center gap-2 col-span-2">
+                <a href="/disease/{{object.pk}}/delete" class="border-2 border-black rounded-md font-bold capitalize px-2 hover:text-white hover:bg-[#333]">delete</a>
+                <a href="/disease/{{object.pk}}/edit" class="border-2 border-black rounded-md font-bold capitalize px-2 hover:text-white hover:bg-[#333]">edit</a>
+            </div>
+        </div>
+    </div>
+
+    {% empty %}
+
+    <p class="text-3xl text-slate-600 font-bold">No disease history found.</p>
+
+    {% endfor %}
+</div>
+{% endblock content %}

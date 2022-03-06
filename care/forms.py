@@ -2,6 +2,7 @@ from django import forms
 
 from arike.users.models import User
 from care.models import FamilyDetails, Patient
+from care.models.disease import PatientDisease
 from care.models.treatment import Treatment
 
 
@@ -54,3 +55,9 @@ class TreatmentForm(BaseFormMixin, forms.ModelForm):
         exclude = ("deleted", "patient")
 
     description = forms.CharField(widget=forms.Textarea({"rows": 3}))
+
+
+class PatientDiseaseForm(BaseFormMixin, forms.ModelForm):
+    class Meta:
+        model = PatientDisease
+        fields = ("disease", "treatment", "note")
