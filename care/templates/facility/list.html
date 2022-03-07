@@ -15,9 +15,9 @@
     </select>
     <button class="capitalize bg-[#333] p-2 text-white rounded-lg mx-2">apply</button>
 </form>
-<div class="flex w-full">
+<div class="grid grid-cols-2 gap-4">
     {% for facility in object_list %}
-    <div class="bg-white rounded-lg w-1/2 m-2 p-4">
+    <div class="bg-white rounded-lg w-full m-2 p-4">
         <div class="flex justify-between items-center">
           <p class="font-bold text-xl">{{facility.name}}</p>
           <p class="text-gray-500 bg-gray-300 px-2 rounded-full">{{facility.kind}}</p>

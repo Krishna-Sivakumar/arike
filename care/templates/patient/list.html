@@ -37,9 +37,9 @@
 <hr class="border-t-gray-300 border-t-2 m-2">
 
 {% endif %}
-<div class="flex flex-wrap w-full">
+<div class="flex w-full flex-wrap">
     {% for patient in object_list %}
-    <div class="bg-white rounded-lg w-1/2 m-2 p-4">
+    <div class="bg-white rounded-lg w-2/5 m-2 p-4">
         <div class="flex justify-between items-center">
           <p class="font-bold text-xl">{{patient.full_name}}</p>
           <p class="text-gray-500 bg-gray-300 px-2 rounded-full">{{patient.kind}}</p>
