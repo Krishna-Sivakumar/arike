@@ -3,10 +3,10 @@ from django.views import generic
 
 from care.models import Facility, Ward
 
-from .mixins import TitleMixin
+from .mixins import TitleMixin, UserAccessMixin
 
 
-class FacilityAccessMixin:
+class FacilityAccessMixin(UserAccessMixin):
     def handle_no_permission(self):
         return HttpResponseRedirect("/")
 

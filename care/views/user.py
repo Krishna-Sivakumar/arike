@@ -12,6 +12,7 @@ from django.views import generic
 from arike.users.models import User
 from care.forms import UserForm
 from care.models import TemporaryLink, Report
+from config.settings.local import FROM_ADDRESS
 
 from .mixins import TitleMixin
 
@@ -55,7 +56,7 @@ class CreateUser(UserAccessMixin, TitleMixin, generic.edit.CreateView):
         send_mail(
             "Onboarding Email",
             f"Click this link to set your password: https://arike.com/temp?token={temp_link.token}",
-            from_email="admin@arike.com",
+            from_email=FROM_ADDRESS,
             recipient_list=[self.object.email]
         )
 
@@ -92,6 +93,7 @@ class AssignFacility(UserAccessMixin, TitleMixin, generic.edit.UpdateView):
     template_name = "user/form.html"
     fields = ("facility",)
     title = "Assign Facility"
+    success_url = "/user/"
 
     def get_queryset(self):
         return User.objects.filter(

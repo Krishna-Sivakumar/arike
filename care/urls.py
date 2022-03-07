@@ -47,7 +47,8 @@ urlpatterns = [
     path("visit/schedule", care.views.ScheduleVisit.as_view()),
     path("visit/<pk>/delete/", care.views.UnscheduleVisit.as_view()),
     path("visit/<pk>/notes/", care.views.ListVisitNotes.as_view()),
-    path("visit/<pk>/edit/", care.views.VisitDetail.as_view())
+    path("visit/<pk>/edit/", care.views.VisitDetail.as_view()),
+    path("visit/<pk>/notes/create", care.views.CreateVisitNotes.as_view()),
 ] + [
     # Disease Views
     path("patient/<pk>/disease/", care.views.ListDiseaseHistory.as_view()),

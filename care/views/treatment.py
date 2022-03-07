@@ -29,6 +29,7 @@ class CreateTreatment(UserAccessMixin, TitleMixin, PatientAuthorizationMixin, ge
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.patient = Patient.objects.get(pk=self.kwargs.get("pk"))
+        self.object.nurse = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 

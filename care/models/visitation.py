@@ -30,8 +30,8 @@ class VisitDetails(BaseModel):
     pubic_hygiene = models.TextField(null=False, blank=False)
     systemic_examination = models.CharField(
         max_length=100, choices=SYSTEMIC_EXAMINATION_CHOICES, null=False, blank=False)
-    patient_at_peace = models.BooleanField(default=False)
-    pain = models.BooleanField(default=False)
+    patient_at_peace = models.BooleanField(default=False, verbose_name="Is the patient at peace?")
+    pain = models.BooleanField(default=False, verbose_name="Is the patient in pain?")
     symptoms = models.CharField(max_length=100, null=True, blank=True, choices=SYMPTOM_CHOICES)
     note = models.TextField()
 

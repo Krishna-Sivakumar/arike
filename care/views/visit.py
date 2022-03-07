@@ -5,6 +5,7 @@ from django.views import generic
 
 from care.forms import ScheduleVisitForm, VisitDetailForm
 from care.models import Treatment, VisitSchedule
+from care.models.treatment import TreatmentNotes
 
 from .mixins import TitleMixin, UserAccessMixin
 
@@ -58,7 +59,7 @@ class ListVisits(UserAccessMixin, generic.ListView):
     def get_queryset(self):
         now = datetime.now()
         return VisitSchedule.objects.filter(
-            nurse__facility=self.request.user.facility,
+            nurse=self.request.user,
             timestamp__gte=now,
             deleted=False
         )
@@ -71,9 +72,21 @@ class VisitDetail(UserAccessMixin, TitleMixin, generic.edit.CreateView):
 
     title = "patient health information"
 
+    def form_valid(self, form):
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class ListVisitNotes(UserAccessMixin, generic.ListView):
     template_name = "visit/note_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        visit: VisitSchedule = VisitSchedule.objects.get(pk=self.kwargs.get("pk"))
+        context.update({
+            "patient": visit.patient
+        })
+        return context
 
     def get_queryset(self):
         visit: VisitSchedule = VisitSchedule.objects.get(pk=self.kwargs.get("pk"))
@@ -86,3 +99,9 @@ class ListVisitNotes(UserAccessMixin, generic.ListView):
 class CreateVisitNotes(TitleMixin, generic.edit.CreateView):
     title = "add notes"
     template_name = "user/form.html"
+
+    def get_queryset(self):
+        return TreatmentNotes.objects.all()
+
+    def get_queryset(self):
+        pass

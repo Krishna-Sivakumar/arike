@@ -8,7 +8,8 @@ from care.models import (
     Treatment,
     VisitDetails,
     VisitSchedule,
-    Report
+    Report,
+    Facility
 )
 
 
@@ -31,7 +32,7 @@ class CustomForm(BaseFormMixin, forms.ModelForm):
     class Meta:
         model = Patient
         fields = "__all__"
-        exclude = ("deleted", )
+        exclude = ("deleted", "facility")
 
 
 class FamilyForm(BaseFormMixin, forms.ModelForm):
@@ -51,13 +52,14 @@ class UserForm(BaseFormMixin, forms.ModelForm):
         model = User
         fields = ("first_name", "last_name", "username", "email", "date_of_birth", "facility", "role")
 
+    facility = forms.ModelChoiceField(queryset=Facility.objects.all(), required=True)
     role = forms.ChoiceField(choices=User.roles[:2])
 
 
 class TreatmentForm(BaseFormMixin, forms.ModelForm):
     class Meta:
         model = Treatment
-        fields = ("description", "care_type")
+        fields = ("description", "care_type", "nurse")
         exclude = ("deleted", "patient")
 
     description = forms.CharField(widget=forms.Textarea({"rows": 3}))
@@ -82,9 +84,6 @@ class VisitDetailForm(BaseFormMixin, forms.ModelForm):
         model = VisitDetails
         fields = "__all__"
         exclude = ("deleted", )
-
-    pain = forms.BooleanField(widget=forms.NullBooleanSelect(), label="Is the patient in pain?")
-    patient_at_peace = forms.BooleanField(widget=forms.NullBooleanSelect(), label="Is the patient at peace?")
 
 
 class ScheduleReportForm(BaseFormMixin, forms.ModelForm):

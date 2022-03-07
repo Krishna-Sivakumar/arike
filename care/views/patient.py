@@ -10,6 +10,8 @@ from arike.users.models import User
 from care.forms import CustomForm
 from care.models import Patient
 
+from django.db.models import Q
+
 from .mixins import TitleMixin
 
 
@@ -24,7 +26,12 @@ class UserAccessMixin(LoginRequiredMixin, UserPassesTestMixin, AccessMixin):
 class PatientModelView:
     def get_queryset(self):
         nurse: User = self.request.user
-        return Patient.objects.filter(facility=nurse.facility, facility__kind="PHC", deleted=False)
+        if nurse.role == "DA":
+            return Patient.objects.filter(facility__ward__lsg_body__district=nurse.district, deleted=False)
+        elif nurse.role == "SN":
+            return Patient.objects.filter(Q(chc_nurse=nurse, deleted=False) | Q(facility=nurse.facility, deleted=False))
+        else:
+            return Patient.objects.filter(facility=nurse.facility, deleted=False)
 
 
 class PatientList(UserAccessMixin, generic.ListView):
@@ -46,7 +53,10 @@ class PatientList(UserAccessMixin, generic.ListView):
             "phone__icontains": self.request.GET.get("phone") or "",
         }
 
-        return Patient.objects.filter(facility=nurse.facility, facility__kind="PHC", **query_params, deleted=False)
+        if self.request.user.role == "DA":
+            return Patient.objects.filter(facility__ward__lsg_body__district=nurse.district, deleted=False)
+
+        return Patient.objects.filter(facility=nurse.facility, **query_params, deleted=False)
 
 
 class PatientDetails(UserAccessMixin, PatientModelView, generic.DetailView):
@@ -58,6 +68,12 @@ class PatientCreate(UserAccessMixin, PatientModelView, TitleMixin, generic.edit.
     form_class = CustomForm
     success_url = "/patient/"
     title = "create patient"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.facility = self.request.user.facility
+        self.object.save()
+        return HttpResponseRedirect("/patient/")
 
 
 class PatientUpdate(UserAccessMixin, PatientModelView, TitleMixin, generic.edit.UpdateView):
@@ -83,3 +99,8 @@ class PatientDelete(UserAccessMixin, PatientModelView, TitleMixin, generic.edit.
         self.object.deleted = True
         self.object.save()
         return HttpResponseRedirect(success_url)
+
+
+class PatientVisitList(UserAccessMixin, generic.ListView):
+    template_name = "patient/visit_list.html"
+    pass
