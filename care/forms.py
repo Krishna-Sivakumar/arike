@@ -1,7 +1,14 @@
 from django import forms
 
 from arike.users.models import User
-from care.models import FamilyDetails, Patient, PatientDisease, Treatment, VisitSchedule, VisitDetails
+from care.models import (
+    FamilyDetails,
+    Patient,
+    PatientDisease,
+    Treatment,
+    VisitDetails,
+    VisitSchedule,
+)
 
 
 class BaseFormMixin():

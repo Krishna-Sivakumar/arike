@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from arike.users.models import User
+
 from .basic import FAMILY_RELATION_CHOICES, GENDER_CHOICES, BaseModel
 from .organization import Facility, Ward
 
@@ -17,6 +19,13 @@ class Patient(BaseModel):
     emergency_phone_number = models.CharField(max_length=10, null=False, blank=False)
     expired_time = models.DateTimeField(null=True, blank=True)
 
+    chc_nurse = models.ForeignKey(
+        User,
+        verbose_name="Refer to Nurse",
+        null=True,
+        blank=True,
+        on_delete=models.DO_NOTHING
+    )
     ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
     facility = models.ForeignKey(Facility, on_delete=models.PROTECT)
 

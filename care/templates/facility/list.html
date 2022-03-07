@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="w-full bg-white rounded-md m-2 p-2">
+<form class="w-full bg-white rounded-md m-2 p-2" method="GET">
     <p class="text-xl font-bold capitalize">Filters</p>
-    <select class="border-2 rounded-md border-black p-2 mt-2 mx-2" name="" id="">
-        <option value="">Ward<option>
+    <select class="border-2 rounded-md border-black p-2 mt-2 mx-2" name="facility_ward">
+        {% for object in wards %}
+        <option value="{{object.pk}}">{{object}}</option>
+        {% endfor %}
     </select>
-    <select class="border-2 rounded-md border-black p-2 mt-2 mx-2" name="" id="">
-        <option value="">Kind</option>
+    <select class="border-2 rounded-md border-black p-2 mt-2 mx-2" name="facility_kind">
+        <option value="PHC">PHC</option>
+        <option value="CHC">CHC</option>
     </select>
     <button class="capitalize bg-[#333] p-2 text-white rounded-lg mx-2">apply</button>
-</div>
+</form>
 <div class="flex w-full">
     {% for facility in object_list %}
     <div class="bg-white rounded-lg w-1/2 m-2 p-4">
@@ -18,7 +21,6 @@
           <p class="text-gray-500 bg-gray-300 px-2 rounded-full">{{facility.kind}}</p>
         </div>
         <p class="text-gray-700 mt-2">{{facility.address}}</p>
-        <p class="text-gray-600 capitalize font-bold text-xs mt-2">PAZHAMTHOTTAM</p>
         <hr class="border-t-1 mt-4 w-full">
         <div class="flex justify-between mt-2 items-center">
           <p class="font-bold">{{facility.phone}}</p>
