@@ -7,7 +7,10 @@
             <p class="font-bold text-white bg-[#333] px-4 rounded-full capitalize">{{user.role}}</p>
         </div>
         <hr class="border-gray-400 border-t-1 my-4">
-        <p class="text-3xl font-bold">Profile</p>
+        <div class="flex items-center">
+            <p class="text-3xl font-bold ">Profile</p>
+            <a href="/user/{{report_id}}/report" class="ml-auto border-2 border-black rounded-md font-bold capitalize px-2 hover:text-white hover:bg-[#333]">report</a>
+        </div>
         <div class="grid grid-cols-2 grid-rows-2 gap-4 mt-5">
             <div class="bg-white rounded-lg flex flex-col p-4">
                 <p class="text-gray-500">Full Name</p>

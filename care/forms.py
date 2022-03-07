@@ -8,6 +8,7 @@ from care.models import (
     Treatment,
     VisitDetails,
     VisitSchedule,
+    Report
 )
 
 
@@ -84,3 +85,24 @@ class VisitDetailForm(BaseFormMixin, forms.ModelForm):
 
     pain = forms.BooleanField(widget=forms.NullBooleanSelect(), label="Is the patient in pain?")
     patient_at_peace = forms.BooleanField(widget=forms.NullBooleanSelect(), label="Is the patient at peace?")
+
+
+class ScheduleReportForm(BaseFormMixin, forms.ModelForm):
+
+    time = forms.TimeField(
+        widget=forms.TimeInput(
+            attrs={"type": "time"}
+        ),
+        required=True,
+        help_text="<small><em>Use UTC time</em></small>"
+    )
+
+    disabled = forms.BooleanField(
+        widget=forms.CheckboxInput(),
+        label="Disable daily reports",
+        required=False
+    )
+
+    class Meta:
+        model = Report
+        fields = ["time", "disabled"]

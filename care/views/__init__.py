@@ -1,4 +1,4 @@
-from .base import Home, UserLogin, Profile, TemporaryLogin
+from .base import Home, UserLogin, Profile, TemporaryLogin, ScheduleReportView
 from .patient import PatientCreate, PatientDetails, PatientList, PatientUpdate, PatientDelete
 from .family_details import ListFamily, CreateFamily, UpdateFamily, DeleteFamily
 from .user import ListUsers, CreateUser, UserDetail, UpdateUser, DeleteUser, AssignFacility

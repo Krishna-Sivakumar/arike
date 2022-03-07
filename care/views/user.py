@@ -11,7 +11,7 @@ from django.views import generic
 
 from arike.users.models import User
 from care.forms import UserForm
-from care.models import TemporaryLink
+from care.models import TemporaryLink, Report
 
 from .mixins import TitleMixin
 
@@ -49,6 +49,8 @@ class CreateUser(UserAccessMixin, TitleMixin, generic.edit.CreateView):
 
         temp_link = TemporaryLink(user=self.object)
         temp_link.save()
+
+        Report.objects.create(user=self.object)
 
         send_mail(
             "Onboarding Email",

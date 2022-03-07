@@ -16,3 +16,10 @@ def generate_token():
 class TemporaryLink(models.Model):
     token = models.CharField(default=generate_token, null=False, blank=False, max_length=30)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Report(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    time = models.TimeField(null=True)
+    last_updated = models.DateTimeField(null=True)
+    disabled = models.BooleanField(default=True)

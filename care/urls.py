@@ -32,6 +32,7 @@ urlpatterns = [
     path("user/<pk>/edit/", care.views.UpdateUser.as_view()),
     path("user/<pk>/delete/", care.views.DeleteUser.as_view()),
     path("user/<pk>/assign/", care.views.AssignFacility.as_view()),
+    path("user/<pk>/report", care.views.ScheduleReportView.as_view()),
 ] + [
     # Treatment Views
     path("patient/<pk>/treatment/", care.views.ListTreatments.as_view()),
