@@ -33,10 +33,10 @@ class User(AbstractUser):
     role = CharField(max_length=3, choices=roles, null=False, blank=False)
     phone = CharField(max_length=10, null=False, blank=False)
     is_verified = BooleanField(default=False)
-    date_of_birth = DateTimeField(null=False, blank=False)
+    date_of_birth = DateTimeField(null=True, blank=True)
 
     district = ForeignKey("care.District", null=True, on_delete=PROTECT)
-    facility = ForeignKey("care.Facility", null=True, on_delete=PROTECT)
+    facility = ForeignKey("care.Facility", null=True, blank=True, on_delete=PROTECT)
 
     def get_absolute_url(self):
         """Get url for user's detail view.

@@ -7,8 +7,6 @@ from django.db import transaction
 from care.models import Report, Patient, Treatment
 from config import celery_app
 
-from arike.users.models import User
-
 import os
 
 User = get_user_model()
