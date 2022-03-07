@@ -25,15 +25,17 @@ class ListFacilities(FacilityAccessMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        query_params = {
-            "kind__in": ["PHC", "CHC"],
-        }
+        query_params = {}
 
-        if "facility__kind" in self.request.GET.keys():
-            query_params["kind__in"] = [self.request.GET.get("facility_kind")]
+        if "facility_kind" in self.request.GET.keys():
+            kind = self.request.GET.get("facility_kind")
+            if kind != "none":
+                query_params["kind"] = self.request.GET.get("facility_kind")
 
         if "facility_ward" in self.request.GET.keys():
-            query_params["ward__pk"] = self.request.GET.get("facility_ward")
+            ward = self.request.GET.get("facility_ward")
+            if ward != "none":
+                query_params["ward__pk"] = self.request.GET.get("facility_ward")
 
         print(query_params, Facility.objects.filter(
             **query_params

@@ -3,11 +3,13 @@
 <form class="w-full bg-white rounded-md m-2 p-2" method="GET">
     <p class="text-xl font-bold capitalize">Filters</p>
     <select class="border-2 rounded-md border-black p-2 mt-2 mx-2" name="facility_ward">
+        <option value="none">Ward</option>
         {% for object in wards %}
         <option value="{{object.pk}}">{{object}}</option>
         {% endfor %}
     </select>
     <select class="border-2 rounded-md border-black p-2 mt-2 mx-2" name="facility_kind">
+        <option value="none">Kind</option>
         <option value="PHC">PHC</option>
         <option value="CHC">CHC</option>
     </select>
