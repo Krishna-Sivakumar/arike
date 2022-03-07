@@ -44,17 +44,3 @@ class FamilyDetails(BaseModel):
     is_primary = models.BooleanField(default=False)
 
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-
-
-@receiver(post_save, sender=Patient)
-def updateReport(instance, **kwargs):
-    send_mail(
-        "subject",
-        "message",
-        "hospital@hospital.com",
-        [
-            member.email
-            for member in
-            FamilyDetails.objects.filter(patient=instance, deleted=False)
-        ]
-    )
