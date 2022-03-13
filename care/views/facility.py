@@ -42,7 +42,9 @@ class ListFacilities(FacilityAccessMixin, generic.ListView):
         ))
 
         return Facility.objects.filter(
-            ward__lsg_body__district=self.request.user.district, **query_params
+            deleted=False,
+            ward__lsg_body__district=self.request.user.district,
+            **query_params
         )
 
 
@@ -51,7 +53,8 @@ class ViewFacility(FacilityAccessMixin, generic.DetailView):
 
     def get_queryset(self):
         return Facility.objects.filter(
-            ward__lsg_body__district=self.request.user.district
+            ward__lsg_body__district=self.request.user.district,
+            deleted=False
         )
 
 
@@ -61,9 +64,13 @@ class UpdateFacility(FacilityAccessMixin, TitleMixin, generic.UpdateView):
     model = Facility
     fields = ("name", "kind", "address", "pincode", "phone", "ward",)
 
+    def get_success_url(self):
+        return f"/facility/{self.get_object().pk}/"
+
     def get_queryset(self):
         return Facility.objects.filter(
-            ward__lsg_body__district=self.request.user.district
+            ward__lsg_body__district=self.request.user.district,
+            deleted=False
         )
 
 
@@ -71,10 +78,20 @@ class DeleteFacility(FacilityAccessMixin, TitleMixin, generic.DeleteView):
     template_name = "user/form.html"
     model = Facility
 
+    def get_success_url(self):
+        return f"/facility/{self.get_object().pk}/"
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.deleted = True
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
     def get_title(self):
         return f"Delete {self.get_object()}"
 
     def get_queryset(self):
         return Facility.objects.filter(
-            ward__lsg_body__district=self.request.user.district
+            ward__lsg_body__district=self.request.user.district,
+            deleted=False
         )

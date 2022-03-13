@@ -28,6 +28,8 @@ class BaseFormMixin():
 class CustomForm(BaseFormMixin, forms.ModelForm):
 
     address = forms.CharField(widget=forms.Textarea({"rows": 3}))
+    date_of_birth = forms.DateField(widget=forms.DateInput({"type": "date"}))
+    expired_time = forms.DateTimeField(widget=forms.DateTimeInput({"type": "datetime-local"}), required=False)
 
     class Meta:
         model = Patient
