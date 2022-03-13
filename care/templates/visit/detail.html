@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <p class="text-4xl font-bold capitalize">Visit History</p>
+</div>
+<div class="mt-5">
+    <p class="text-2xl font-bold capitalize">{{patient}}</p>
+    <p class="text-gray-500 text-lg">{{patient.address}}</p>
+</div>
+
+{% if details %}
+<div class="mt-5">
+    <p class="text-2xl font-bold capitalize">Health Information</p>
+    <div class="bg-white rounded-lg p-4 mt-2 grid grid-cols-2">
+        <div class="bg-white rounded-lg p-4 flex flex-col">
+            <p class="font-bold capitalize">palliative phase</p>
+            <p class="capitalize">{{details.palliative_phase}}</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 flex flex-col">
+            <p class="font-bold capitalize">blood pressure</p>
+            <p class="capitalize">{{details.pulse}}</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 flex flex-col">
+            <p class="font-bold capitalize">pressure</p>
+            <p class="capitalize">{{details.blood_pressure}}</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 flex flex-col">
+            <p class="font-bold capitalize">personal hygiene</p>
+            <p class="capitalize">{{details.personal_hygiene}}</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 flex flex-col">
+            <p class="font-bold capitalize">mouth hygiene</p>
+            <p class="capitalize">{{details.mouth_hygiene}}</p>
+            <p></p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if notes %}
+
+<div class="mt-5">
+    <p class="text-2xl font-bold capitalize">notes</p>
+    <div class="flex flex-col gap-4">
+        {% for object in notes %}
+        <div class="bg-white rounded-lg w-full p-4">
+            <div class="flex flex-col gap-2">
+                <p class="font-bold">Given by: {{object.user}}</p>
+                <p>{{object.created_at}}</p>
+                <p>{{object.note}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}

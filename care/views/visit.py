@@ -6,6 +6,7 @@ from django.views import generic
 from care.forms import ScheduleVisitForm, VisitDetailForm
 from care.models import Treatment, VisitSchedule
 from care.models.treatment import TreatmentNotes
+from care.models.visitation import VisitDetails
 
 from .mixins import TitleMixin, UserAccessMixin
 
@@ -65,7 +66,7 @@ class ListVisits(UserAccessMixin, generic.ListView):
         )
 
 
-class VisitDetail(UserAccessMixin, TitleMixin, generic.edit.CreateView):
+class VisitDetailEntry(UserAccessMixin, TitleMixin, generic.edit.CreateView):
     form_class = VisitDetailForm
     template_name = "user/form.html"
     success_url = "/visit/"
@@ -75,6 +76,32 @@ class VisitDetail(UserAccessMixin, TitleMixin, generic.edit.CreateView):
     def form_valid(self, form):
         self.object = form.save()
         return HttpResponseRedirect(self.get_success_url())
+
+
+class VisitDetail(UserAccessMixin, generic.DetailView):
+    template_name = "visit/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        patient = self.get_object().patient
+        context.update({
+            "patient": patient
+        })
+
+        details = VisitDetails.objects.filter(schedule=self.get_object()).first()
+        if details is not None:
+            context["details"] = details
+
+        notes = TreatmentNotes.objects.filter(visit=self.get_object())
+        if notes is not None:
+            context["notes"] = notes
+
+        return context
+
+    def get_queryset(self):
+        return VisitSchedule.objects.filter(
+            deleted=False
+        )
 
 
 class ListVisitNotes(UserAccessMixin, generic.ListView):
@@ -102,6 +129,3 @@ class CreateVisitNotes(TitleMixin, generic.edit.CreateView):
 
     def get_queryset(self):
         return TreatmentNotes.objects.all()
-
-    def get_queryset(self):
-        pass

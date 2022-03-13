@@ -8,7 +8,7 @@ from django.views import generic
 
 from arike.users.models import User
 from care.forms import CustomForm
-from care.models import Patient
+from care.models import Patient, VisitSchedule
 
 from django.db.models import Q
 
@@ -103,4 +103,10 @@ class PatientDelete(UserAccessMixin, PatientModelView, TitleMixin, generic.edit.
 
 class PatientVisitList(UserAccessMixin, generic.ListView):
     template_name = "patient/visit_list.html"
-    pass
+
+    def get_queryset(self):
+        patient = Patient.objects.get(pk=self.kwargs.get("pk"))
+        return VisitSchedule.objects.filter(
+            patient=patient,
+            deleted=False
+        )

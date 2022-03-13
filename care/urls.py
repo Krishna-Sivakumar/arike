@@ -18,6 +18,7 @@ urlpatterns = [
     path("patient/<pk>/", care.views.PatientDetails.as_view()),
     path("patient/<pk>/edit/", care.views.PatientUpdate.as_view()),
     path("patient/<pk>/delete/", care.views.PatientDelete.as_view()),
+    path("patient/<pk>/visits/", care.views.PatientVisitList.as_view()),
 ] + [
     # Family Detail Views
     path("patient/<pk>/family/", care.views.ListFamily.as_view()),
@@ -45,9 +46,10 @@ urlpatterns = [
     # Visitation Views
     path("visit/", care.views.ListVisits.as_view()),
     path("visit/schedule", care.views.ScheduleVisit.as_view()),
+    path("visit/<pk>/", care.views.VisitDetail.as_view()),
     path("visit/<pk>/delete/", care.views.UnscheduleVisit.as_view()),
     path("visit/<pk>/notes/", care.views.ListVisitNotes.as_view()),
-    path("visit/<pk>/edit/", care.views.VisitDetail.as_view()),
+    path("visit/<pk>/edit/", care.views.VisitDetailEntry.as_view()),
     path("visit/<pk>/notes/create", care.views.CreateVisitNotes.as_view()),
 ] + [
     # Disease Views
