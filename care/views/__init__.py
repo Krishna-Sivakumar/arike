@@ -5,4 +5,4 @@ from .user import ListUsers, CreateUser, UserDetail, UpdateUser, DeleteUser, Ass
 from .treatment import ListTreatments, CreateTreatment, UpdateTreatment, DeleteTreatment, DetailTreatment, CreateTreatmentNote
 from .visit import ScheduleVisit, ListVisits, VisitDetail, ListVisitNotes, CreateVisitNotes, UnscheduleVisit
 from .disease import ListDiseaseHistory, CreateDiseaseHistory, UpdateDiseaseHistory, DeleteDiseaseHistory
-from .facility import ListFacilities, ViewFacility, UpdateFacility, DeleteFacility
+from .facility import ListFacilities, ViewFacility, UpdateFacility, DeleteFacility, CreateFacility

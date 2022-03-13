@@ -61,4 +61,5 @@ urlpatterns = [
     path("facility/<pk>/", care.views.ViewFacility.as_view()),
     path("facility/<pk>/edit", care.views.UpdateFacility.as_view()),
     path("facility/<pk>/delete", care.views.DeleteFacility.as_view()),
+    path("facility/create", care.views.CreateFacility.as_view()),
 ]

@@ -79,7 +79,7 @@ class DeleteFacility(FacilityAccessMixin, TitleMixin, generic.DeleteView):
     model = Facility
 
     def get_success_url(self):
-        return f"/facility/{self.get_object().pk}/"
+        return "/facility/"
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -95,3 +95,11 @@ class DeleteFacility(FacilityAccessMixin, TitleMixin, generic.DeleteView):
             ward__lsg_body__district=self.request.user.district,
             deleted=False
         )
+
+
+class CreateFacility(FacilityAccessMixin, TitleMixin, generic.CreateView):
+    template_name = "user/form.html"
+    model = Facility
+    fields = ("kind", "name", "address", "pincode", "phone", "ward")
+    success_url = "/facility/"
+    title = "create facility"

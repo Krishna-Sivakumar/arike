@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="flex justify-between m-2 items-center">
+    <p class="text-4xl font-bold capitalize">Facilities</p>
+    <a href="/facility/create" class="bg-[#333] text-white p-2 px-8 rounded-lg capitalize">new</a>
+</div>
 <form class="w-full bg-white rounded-md m-2 p-2" method="GET">
     <p class="text-xl font-bold capitalize">Filters</p>
     <select class="border-2 rounded-md border-black p-2 mt-2 mx-2" name="facility_ward">
@@ -19,14 +23,15 @@
     {% for facility in object_list %}
     <div class="bg-white rounded-lg w-full m-2 p-4">
         <div class="flex justify-between items-center">
-          <p class="font-bold text-xl">{{facility.name}}</p>
-          <p class="text-gray-500 bg-gray-300 px-2 rounded-full">{{facility.kind}}</p>
+            <p class="font-bold text-xl">{{facility.name}}</p>
+            <p class="text-gray-500 bg-gray-300 px-2 rounded-full">{{facility.kind}}</p>
         </div>
         <p class="text-gray-700 mt-2">{{facility.address}}</p>
         <hr class="border-t-1 mt-4 w-full">
         <div class="flex justify-between mt-2 items-center">
-          <p class="font-bold">{{facility.phone}}</p>
-          <a href="/facility/{{facility.pk}}/" class="border-2 border-black rounded-md font-bold capitalize px-2">view</a>
+            <p class="font-bold">{{facility.phone}}</p>
+            <a href="/facility/{{facility.pk}}/"
+                class="border-2 border-black rounded-md font-bold capitalize px-2">view</a>
         </div>
     </div>
     {% endfor %}
